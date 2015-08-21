@@ -1,12 +1,16 @@
 
+require('_class')
+
 -- Data access layer
-local Data = {
-	products = {
+local Data = class()
+
+function Data:ctor()
+	self.products = {
 		milk   = {price = 1.50, quantity = 10},
 		eggs   = {price = 0.20, quantity = 100},
 		cheese = {price = 2.00, quantity = 10}
 	}
-}
+end
 
 function Data:get(key, default)
 	print()
@@ -15,9 +19,11 @@ function Data:get(key, default)
 end
 
 -- Business Logic Layer
-local BusinessLogic = {
-	data = Data
-}
+local BusinessLogic = class()
+
+function BusinessLogic:ctor()
+	self.data = Data.new()
+end
 
 function BusinessLogic:product_list()
 	if not self.product_list_ then
@@ -35,9 +41,10 @@ function BusinessLogic:product_information(product)
 end
 
 -- User Interface layer
-local UI = {
-	business_logic = BusinessLogic
-}
+local UI = class()
+function UI:ctor()
+	self.business_logic = BusinessLogic.new()
+end
 
 function UI:get_product_list()
 	print('PRODUCT LIST:')
@@ -57,13 +64,16 @@ function UI:get_product_information(product)
 	end
 end
 
-UI:get_product_list()
-UI:get_product_information('cheese')
-UI:get_product_information('eggs')
-UI:get_product_information('milk')
-UI:get_product_information('arepas')
+local ui = UI.new()
+ui:get_product_list()
+ui:get_product_information('cheese')
+ui:get_product_information('eggs')
+ui:get_product_information('milk')
+ui:get_product_information('arepas')
 
--- OUTPUT --
+---------------------------------------------------------------------------
+-- OUTPUT
+---------------------------------------------------------------------------
 -- PRODUCT LIST:
 -- eggs
 -- cheese
