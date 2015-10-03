@@ -1,5 +1,5 @@
 
-local function class(super)
+local function Class(super)
     local obj = {}
     obj.__index = obj
     setmetatable(obj, super)
@@ -21,9 +21,9 @@ local function class(super)
     return obj
 end
 
-local Data = class()
-local a = Data.new()
-local b = Data.new()
+local class = Class()
+local a = class.new()
+local b = class.new()
 a.name = "Singleton Pattern"
 
 print(a.name)
